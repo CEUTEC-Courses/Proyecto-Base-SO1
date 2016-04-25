@@ -28,3 +28,31 @@ Este es primordialmente un proyecto *de entrenamiento* cuyo objetivo es que te f
     2. Imprimir "Hello World" usando la función `putInMemory`: 10% 
     3. Crear función `putChar` y usarla para imprimir "Hello World" en el centro de la pantalla: 20%
     4. Crear funcion `putStr` y usarla para imprimir "Hello World" en la esquina inferior derecha de la pantalla: 35% 
+
+## Proyecto 2
+
+### Objetivo
+uno de los mayores componentes de un sistema operativo es su interfaz de llamadas al sistema. Esta interfaz permite a los programas de usuario solicitar servicios del sistema operativo. En este proyecto aprenderá como usar algunas de estas llamadas al sistema proveidas por el BIOS. También creará sus propias llamadas al sistema para imprimir una cadena de texto en la pantalla, leer texto desde el teclado y leer un sector del disco. Estas llamadas se usarán en proyectos posteriores para crear un shell interactivo y un sistema de archivos.
+
+### Shell Script
+1. Modificarl el shell script compileOS para copiar el archivo de texto `message.txt` que se incluye al sector 30 del disco.
+
+### Kernel
+1. Crear una función llamada `printString` que reciba como argumento una cadena de texto (char *), imprima el contenido de la cadena en la pantalla y retorne el número de caracteres que imprimió. La función debe imprimir cada caracter de la cadena exepto el caracter de `null` al final de la cadena.
+2. Crear una función llamada `readChar` que lea un caracter del teclado usando la interrupción `0x16` y retorne el caracter leído.
+3. Crear una función llamada `readString` que reciba como argumento una cadena de texto (char *), lea una cadena de caracteres del teclado y la almacene en la cadena recibida como argumento y retorne el número de caracteres leído.
+4. Crear una función `readSector` que reciba como argumentos una dirección de memoria y un número de sector, convierta ese número de sector en una dirección T:H:S, lea el sector indicado del disco usando la interrupción `0x13` y coloque el sector leído en la dirección de memoria recibida como argumento. La función debe retornar 1 si se leyó el sector correctamente y cualquier otro valor en caso contrario.
+5. Crear la interfaz de llamadas al sistema.
+6. Crear las llamadas al sistema para `printString`, `readChar` y `readString`
+7. La función `readString` debe manejar adecuadamente las teclas `backspace` y `delete`.
+
+[Aquí](http://users.dickinson.edu/~braught/courses/cs354s12/proj/p2.pdf) puede encontrar la definición completa del proyecto 2.
+
+### Evaluación
+1. Modificar el script compileOS para copiar el archivo messages.txt en el sector 30 del disco: 10%
+2. Kernel
+    1. La función `printString` imprime el texto correctamente en la pantalla usando la interrupción `0x10`, retorna el número de caracteres impresos y no imprime el caracter `null`: 10%
+    2. La función `readChar` lee correctamente un caracter del teclado usando la interrupción `0x16`, retorna el caracter ASCII leído, el scan code y devuelve 1 si el caracter se leyó correctamente: 15%
+    3. La función `readString` lee correctamente una cadena de texto del teclado usando la interrupción `0x16` hasta que la tecla ENTER sea presionada, no incluye el caracter ENTER en la cadena leída, agrega el caracter `null` al final de la cadena leída y retorna el número de caracteres leídos y maneja adecuadamente los caracteres `backspace` y `delete`: 15% 
+    4. La función `readSector` lee correctamente un sector del disco usando la interrupción `0x13`, calculando correctamente la dirección T:HS y devuelve 1 si se leyó el sector correctamente: 20%
+    5. Se implementó correctamente la interfaz de llamadas al sistema, modificando correctamente los archivos asm según se indica, invocando las funciones `printString`, `readChar` y `readString` usando las interrupciones indicadas: 30%
